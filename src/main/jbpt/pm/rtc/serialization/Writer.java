@@ -6,7 +6,9 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 
 public class Writer {
@@ -21,12 +23,16 @@ public class Writer {
   private Path createDirectory() {
     Path directory = null;
     String currentWorkingDirectory = System.getProperty("user.dir");
-    String date = LocalDateTime.now().toString();
+    LocalDateTime dateTime = LocalDateTime.now();
+    DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH.mm.ss.SSS");
+    String date = dateTime.format(dateFormatter);
+    String time = dateTime.format(timeFormatter);
     String path = currentWorkingDirectory;
     path += File.separator + "generated-models";
-    path += File.separator + "date-" + date;
+    path += File.separator + "date-" + date + "T" + time;
     try {
-      directory = Files.createDirectories(new File(path).toPath());
+      directory = Files.createDirectories(Paths.get(path));
     } catch (IOException e) {
       String error = "";
       error += "IOException: " + e + "\n";
