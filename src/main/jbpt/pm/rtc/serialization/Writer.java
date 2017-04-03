@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.Collection;
 
@@ -27,7 +26,7 @@ public class Writer {
     path += File.separator + "generated-models";
     path += File.separator + "date-" + date;
     try {
-      directory = Files.createDirectories(Paths.get(path));
+      directory = Files.createDirectories(new File(path).toPath());
     } catch (IOException e) {
       String error = "";
       error += "IOException: " + e + "\n";
